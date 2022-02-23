@@ -1,0 +1,36 @@
+# Exception catching (this way you can re-route what the code will do, in case of errors. It acts similar to an if/else statement)
+# try:  <- Something that might cause an exception (error)
+# except:  <- Do this if there was an exception
+# else:  <- do this if there were no exceptions 
+# finally:  <- do this no matter what happens (can be useful for closing a file if opening one)
+
+
+# Example
+try:
+    file = open("a_file.txt")
+    a_dictionary = {"key": "value"}
+    print(a_dictionary["dsfsagsf"]
+except FileNotFoundError (this will route into here if a FileNotFoundError error occured)
+    file = open("a_file.txt", "w")
+    file.write("something")
+except KeyError as error_message: (the 'as error_message' will allow me to still see what errored out)
+    print(f"the key {error_message} does not exist.")
+else:
+    content = file.read()
+finally:
+    file.close()
+    print("File was closed.")
+
+#BMI Example
+
+height = float(input("Height: "))
+weight = int(input("Weight: "))
+
+if height > 3:
+    raise ValueError("Human Height should not be over 3 meters.")
+
+bmi = weight / height ** 2
+print(bmi)
+
+
+#JSON
