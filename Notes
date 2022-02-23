@@ -34,3 +34,50 @@ print(bmi)
 
 
 #JSON
+Write -> json.dump()
+Read -> json.load()
+Update -> json.update()
+
+
+# save function example in my password manager
+def save():
+    saved_website_name = website_entry.get()
+    saved_username = username_entry.get()
+    saved_password = password_entry.get()
+    new_data = {
+        saved_website_name: {
+            "email": saved_username,
+            "password": saved_password
+        }
+    }
+
+    if len(saved_website_name) == 0 or len(saved_password) == 0:
+        messagebox.showinfo(title="Oh no!", message="Please don't leave any fields empty!")
+        return
+
+    else:
+        try:
+            # opens it in read mode
+            with open("password_vault.json", "r") as password_vault:
+                # Reading old data (turns it from JSON -> a dict)
+                data = json.load(password_vault)
+                # Updating old data with new data
+                data.update(new_data)
+
+            # opens it again in write mode
+            with open("password_vault.json", "w") as password_vault:
+                # Saving updated data
+                json.dump(data, password_vault, indent=4)
+                website_entry.delete(0, END)
+                password_entry.delete(0, END)
+
+        # if there is not a "password_vault.json" file, which would produce a FileNotFoundError when trying
+        # the code above, it will execute these lines of code and create the file. Which should make the above
+        # code work going forward
+        except FileNotFoundError:
+            with open("password_vault.json", "w") as password_vault:
+                json.dump(new_data, password_vault, indent=4)
+                website_entry.delete(0, END)
+                password_entry.delete(0, END)
+
+
